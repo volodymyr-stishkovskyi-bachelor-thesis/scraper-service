@@ -2,7 +2,11 @@ pipeline {
     agent any
 
     environment {
-        NODEJS_VERSION = '18'
+        NODE_VERSION = '18'
+        DOCKER_IMAGE = 'scraper-service:latest'
+        DOCKER_HUB_REPO = 'sweetmnstr/scraper-service'
+        COMPOSE_PATH = '/home/sweetmnstr/ci-cd/thesis'
+        COMPOSE_FILE = 'core-be-docker-compose.yml'
     }
 
     stages {
@@ -30,16 +34,36 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t scraper-service:latest .'
+                sh '''
+                docker build -t ${DOCKER_IMAGE} .
+                '''
+            }
+        }
+
+        stage('Login to Docker Hub') {
+            steps {
+                withCredentials([string(credentialsId: 'docker-hub-token', variable: 'DOCKER_TOKEN')]) {
+                    sh 'echo $DOCKER_TOKEN | docker login -u your-dockerhub-username --password-stdin'
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                sh '''
+                docker tag ${DOCKER_IMAGE} ${DOCKER_HUB_REPO}:latest
+                docker push ${DOCKER_HUB_REPO}:latest
+                '''
             }
         }
 
         stage('Deploy') {
             steps {
                 sh '''
-                    cd /home/sweetmnstr/ci-cd &&
-                    docker-compose down &&
-                    docker-compose up -d
+                cd ${COMPOSE_PATH} &&
+                docker-compose -f ${COMPOSE_FILE} pull &&
+                docker-compose -f ${COMPOSE_FILE} down &&
+                docker-compose -f ${COMPOSE_FILE} up -d
                 '''
             }
         }
