@@ -4,7 +4,7 @@ require('dotenv').config();
 // const puppeteer = require('puppeteer');
 const path = require('path');
 
-const PROTO_PATH = path.join(__dirname, '..', 'core-be/proto/scraper.proto');
+const PROTO_PATH = path.join(__dirname, './scraper.proto');
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
   longs: String,
