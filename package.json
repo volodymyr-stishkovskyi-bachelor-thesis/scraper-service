@@ -5,7 +5,9 @@
     "@grpc/proto-loader": "^0.7.13",
     "@grpc/reflection": "^1.0.4",
     "dotenv": "^16.4.7",
-    "puppeteer": "^24.3.1"
+    "puppeteer": "^24.3.1",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
   },
   "scripts": {
     "start": "node dist/index.js",
