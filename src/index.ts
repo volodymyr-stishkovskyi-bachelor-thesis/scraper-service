@@ -1,8 +1,7 @@
 import * as grpc from '@grpc/grpc-js';
 import * as dotenv from 'dotenv';
-import { scrapeHandler } from './handlers/linkedin-scraper.handler.js';
+import { scrapeHandler } from './handlers/scraper.handler.js';
 import { proto } from './proto.js';
-import { leetcodeHandler } from './handlers/leetcode.handler.js';
 
 dotenv.config();
 
@@ -12,7 +11,6 @@ function main (): void {
   const server: grpc.Server = new grpc.Server();
 
   server.addService(proto.ScraperService.service, { Scrape: scrapeHandler });
-  server.addService(proto.LeetCodeService.service, { GetStats: leetcodeHandler });
 
   const bindAddress: string = `${host}:${port}`;
   server.bindAsync(
