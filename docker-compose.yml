@@ -17,5 +17,5 @@ services:
 
 networks:
   default:
-    external:
-      name: app-network
+    external: true
+    name: thesis-network
