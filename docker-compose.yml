@@ -1,0 +1,15 @@
+services:
+  scraper-service:
+    build:
+      context: .
+    restart: always
+    ports:
+      - "${PORT}:${PORT}"
+    env_file:
+      - .env
+    environment:
+      PORT: ${PORT}
+      HOST: ${HOST}
+      LEETCODE_USERNAME: ${LEETCODE_USERNAME}
+      LEETCODE_URL: ${LEETCODE_URL}
+      CREDLY_PROFILE_URL: ${CREDLY_PROFILE_URL}
