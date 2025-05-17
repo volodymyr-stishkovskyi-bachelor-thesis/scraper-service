@@ -13,3 +13,9 @@ services:
       LEETCODE_USERNAME: ${LEETCODE_USERNAME}
       LEETCODE_URL: ${LEETCODE_URL}
       CREDLY_PROFILE_URL: ${CREDLY_PROFILE_URL}
+
+
+networks:
+  default:
+    external:
+      name: app-network
